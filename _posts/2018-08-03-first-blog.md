@@ -2,13 +2,11 @@
 layout: post
 title:  "the first blog"
 date:   2018-08-03 16:06:05
-categories: Demo&Test
+categories: Demo
 tags: markdown 
 author: Kevin Fan
 ---
 
-* content
-{:toc}
 
 ## Try to Use Markdown syntax
 ### Copy Text from Jekyll
