@@ -5,6 +5,10 @@ date:   2018-08-03 16:06:05
 categories: Demo&Test
 tags: markdown 
 ---
+
+* content
+{:toc}
+
 ## Try to Use Markdown syntax
 ### Copy Text from Jekyll
 [Jekyll Docs](https://jekyllrb.com/docs/structure/)
@@ -66,3 +70,7 @@ This results in a lighter default directory structure : `_layouts`, `_includes` 
 |`.jekyll-metadata`|This helps Jekyll keep track of which files have not been modified since the site was last built, and which files will need to be regenerated on the next build. This file will not be included in the generated site. It’s probably a good idea to add this to your `.gitignore` file.
 |`index.html` or `index.md` and other HTML, Markdown files|Provided that the file has a YAML Front Matter section, it will be transformed by Jekyll. The same will happen for any `.html`, `.markdown`,  `.md`, or `.textile` file in your site’s root directory or directories not listed above.
 |Other Files/Folders|Every other directory and file except for those listed above—such as `css` and `images` folders,  `favicon.ico` files, and so forth—will be copied verbatim to the generated site. There are plenty of *sites already using Jekyll* if you’re curious to see how they’re laid out.
+
+
+<img src="images/jekyll docs 01.jpg" title="DOCS 01" width="200px" height="200px"/>
+<img src="images/jekyll docs 01.jpg" title="DOCS 02" width="200px" height="200px"/>
