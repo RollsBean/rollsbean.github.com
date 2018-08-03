@@ -6,24 +6,24 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: HyG
-brief-intro: Front-end Dev Engineer
+title: Kevin Fan's Blog
+brief-intro: Java Develop Engineer
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://gaohaoyang.github.io" # the base hostname & protocol for your site
+url: "https://rollsbean.github.io" # the base hostname & protocol for your site
 
 permalink: /:year/:month/:day/:title/
 
 # other links
-twitter_username: gaohaoyang126
-facebook_username: gaohaoyang.water
-github_username:  Gaohaoyang
-email: gaohaoyang126@126.com
-weibo_username: 3115521wh
-zhihu_username: gaohaoyang
-linkedIn_username: gaohaoyang
+twitter_username: kevin
+facebook_username: kevin
+github_username:  RollsBean
+email: fantengfei00898@gmail.com
+weibo_username: kevin
+zhihu_username: kevin
+linkedIn_username: kevin
 dribbble_username:
 
-description_footer: 本站记录我前端之旅的沿途风景！
+description_footer: 本站作为本人的技术博客将记录接下来的计算机软件计算学习
 
 # comments
 # two ways to comment, only choose one, and use your own short name
