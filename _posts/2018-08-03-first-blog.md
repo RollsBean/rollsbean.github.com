@@ -4,6 +4,7 @@ title:  "the first blog"
 date:   2018-08-03 16:06:05
 categories: Demo&Test
 tags: markdown 
+author: Kevin Fan
 ---
 
 * content
