@@ -7,6 +7,8 @@ tags: JavaScript
 author: Kevin Fan
 ---
 
+* content
+{:toc}
 
 ## test blog
 

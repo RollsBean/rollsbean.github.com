@@ -7,6 +7,8 @@ tags: markdown
 author: Kevin Fan
 ---
 
+* content
+{:toc}
 
 ## Try to Use Markdown syntax
 ### Copy Text from Jekyll
