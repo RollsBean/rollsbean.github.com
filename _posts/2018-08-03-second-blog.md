@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: demo
 title:  "the second blog"
 date:   2018-08-03 23:48
 categories: JavaScript
