@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: demo
 title:  "the first blog"
 date:   2018-08-03 16:06:05
 categories: Demo
