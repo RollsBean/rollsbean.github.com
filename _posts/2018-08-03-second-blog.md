@@ -10,7 +10,6 @@ author: Kevin Fan
 * content
 {:toc}
 
-## test blog
 
 
 
