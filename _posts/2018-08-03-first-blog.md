@@ -72,6 +72,3 @@ This results in a lighter default directory structure : `_layouts`, `_includes` 
 |`index.html` or `index.md` and other HTML, Markdown files|Provided that the file has a YAML Front Matter section, it will be transformed by Jekyll. The same will happen for any `.html`, `.markdown`,  `.md`, or `.textile` file in your site’s root directory or directories not listed above.
 |Other Files/Folders|Every other directory and file except for those listed above—such as `css` and `images` folders,  `favicon.ico` files, and so forth—will be copied verbatim to the generated site. There are plenty of *sites already using Jekyll* if you’re curious to see how they’re laid out.
 
-
-<img src="images/jekyll docs 01.jpg" title="DOCS 01" width="200px" height="200px"/>
-<img src="images/jekyll docs 01.jpg" title="DOCS 02" width="200px" height="200px"/>
