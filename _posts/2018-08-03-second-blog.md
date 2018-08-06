@@ -11,7 +11,7 @@ author: Kevin Fan
 {:toc}
 
 the second blog
-
+<!-- more -->
 ##Jekyll
 Jekyll is, at its core, a text transformation engine. The concept behind the system is this: you give it text written in 
 your favorite markup language, be that Markdown, [Textile](https://github.com/jekyll/jekyll-textile-converter) , or just plain HTML, and it churns that through a layout or 

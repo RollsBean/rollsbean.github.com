@@ -46,14 +46,14 @@ kramdown:
   syntax_highlighter: rouge
 
 # port
-# port: 1234
+port: 1234
 
 # url
 category_dir: category/
 tag_dir: tag/
 
-# excerpt
-excerpt_separator: "\n\n\n\n"
+# excerpt 摘录分隔符
+excerpt_separator: "<!-- more -->"
 
 # paginate
 gems: [jekyll-paginate]
