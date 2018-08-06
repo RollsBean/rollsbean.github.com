@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "安装以及使用Jekyll的问题总结"
-date:   2018-08-03 16:44:00
+date:   2018-08-06 16:44:00
 categories: jekyll
 tags: jekyll
 author: Kevin Fan
