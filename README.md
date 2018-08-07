@@ -18,6 +18,11 @@ itself not the Jekyll or other tools.
 
 ### Tech in This Blog
 
+Jekyll: [https://jekyllrb.com/](https://jekyllrb.com/)
 ![Jekyll](https://davewentzel.com/images/jekyll.png)
+
+Ruby: [https://www.ruby-lang.org/en/](https://www.ruby-lang.org/en/)
 ![Ruby](https://blog.webhostpython.com/wp-content/uploads/2015/08/Ruby-language-e1440787260291.png)
+
+Disqus: [https://disqus.com](https://disqus.com)
 ![Disqus](http://foreveryoungadult.com/_uploads/images-new/50197/disqustips__span.png)
