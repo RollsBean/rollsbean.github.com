@@ -14,7 +14,7 @@ author: Kevin Fan
 <!-- more -->
 
 
-### 写第一篇博文就显示不出来
+### 博文无法显示
 fork了别人的bolg之后， 我就开始用markdown文件写第一篇bolg， 文本内容是
 [Jekyll Docs](https://jekyllrb.com/docs/structure/) 上的内容， 格式也尽量保持一样， 这样正好可练习一下md的语法，
 然后费劲一番功夫写完传到GitHub上之后， 我的GitHub page并没有更新， 新的文档竟然没有显示。 这我就有些不明白了， 因为我的博文格式是仿照模板里的写的，
