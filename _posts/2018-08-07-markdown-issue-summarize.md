@@ -7,6 +7,9 @@ tags: markdown
 author: Kevin Fan
 ---
 
+* content
+{:toc}
+
 项目运行之后开始用md文件写博客，调格式，在md的语法上又遇到了很多问题。
 
 <!-- more -->

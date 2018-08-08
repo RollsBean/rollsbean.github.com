@@ -7,6 +7,9 @@ tags: jekyll
 author: Kevin Fan
 ---
 
+* content
+{:toc}
+
 经历了几天的折腾，终于能正常运行fork的blog模板和写博客了。 所以在此总结一下这几天出过的问题。
 <!-- more -->
 
