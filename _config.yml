@@ -55,6 +55,9 @@ tag_dir: tag/
 # excerpt 摘录分隔符
 excerpt_separator: "<!-- more -->"
 
-# paginate and site map
-gems: [jekyll-paginate, jekyll-sitemap]
+# paginate
+gems: [jekyll-paginate]
 paginate: 6
+
+plugins:
+- jekyll-sitemap # site map for SEO(Google and Baidu)
