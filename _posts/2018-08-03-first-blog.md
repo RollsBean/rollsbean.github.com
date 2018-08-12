@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "the first blog"
+title:  "The First Blog"
 date:   2018-08-03 16:06:05
 categories: jekyll
 tags: jekyll 
