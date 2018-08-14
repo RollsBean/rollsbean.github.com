@@ -31,6 +31,11 @@ fork别人的博客之后， 这里有很多配置需要修改，个人信息/�
 我将我配置独立域名的过程写在了 [给你的博客配置独立域名](https://rollsbean.com/2018/08/10/configure-private-domain/)。 这篇博客基于
 `namesilo`，可以参考一下。
 
+### 关于Comments评论系统
+
+本站使用[Disqus](https://disqus.com/)作为博客的评论系统，然后国内网络无法加载评论信息，后续会增加新的评论系统来支持国内的网络， 您也可以通过邮件
+`fantengfei7018@126.com` 来联系我。
+
 ### 博客相关技术
 
 Jekyll: [https://jekyllrb.com/](https://jekyllrb.com/)
