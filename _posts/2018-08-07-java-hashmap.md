@@ -234,7 +234,9 @@ final Node<K,V> getNode(int hash, Object key) {
     - HashTable 的`synchronized`是方法级别的， 也就是它是在put()方法上加的， 而ConcurrentHashMap 相当于是HashTable的升级，
      它也是线程安全的， 而且只有在同一个桶上加锁， 极大提高了效率。
      
+<br>     
 
+>原文链接：[rollsbean.com/2018/08/08/java-hashmap/](https://rollsbean.com/2018/08/08/java-hashmap/)
 
 ### 参考文档
 
