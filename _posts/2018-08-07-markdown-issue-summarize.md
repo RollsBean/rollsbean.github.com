@@ -104,3 +104,6 @@ Jekyll要求的博客命名格式是 `YEAR-MONTH-DAY-title.MARKUP`， 在博客�
 (Greenwich Mean Time，格林尼治平时), 所以有时候写了博文，但是并没有在首页中显示可能是没有加时区， 中国大陆时区可以直接在 时间后面加 `+08:00`,
 这样就不会有时间显示的问题了。
 
+<br>
+
+>原文链接：[https://rollsbean.com/2018/08/07/markdown-issue-summarize/](https://rollsbean.com/2018/08/07/markdown-issue-summarize/)

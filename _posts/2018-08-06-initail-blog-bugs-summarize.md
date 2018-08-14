@@ -94,3 +94,7 @@ jekyll 3.8.3 | Error:  Permission denied - bind(2) for 127.0.0.1:4000
 查找4000 端口， `netstat -aon | findstr "4000"` kill掉或者在`_config.yml`中添加配置 `port: 4100`
 
 到此为止项目终于成功运行了， 但是接下来还有markdown语法的很多问题。 下篇博客详细讲。
+
+<br>
+
+>原文链接：[https://rollsbean.com/2018/08/06/initail-blog-bugs-summarize/](https://rollsbean.com/2018/08/06/initail-blog-bugs-summarize/)

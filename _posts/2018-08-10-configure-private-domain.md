@@ -110,14 +110,18 @@ GoDaddy[https://sg.godaddy.com/zh](https://sg.godaddy.com/zh/)(有中文界面�
 
 如果都是对勾，则代表CNAME同步好了，不然，慢慢等待吧！
 
+<br>
+
+>原文链接: [https://rollsbean.com/2018/08/10/configure-private-domain/](https://rollsbean.com/2018/08/10/configure-private-domain/)
+
 ### 相关知识
 
 Domain传播需要的时间 How Long Does Domain Propagation Take? 
 [https://www.hostgator.com/blog/domain-propagation/](www.hostgator.com/blog/domain-propagation)
 
-查看域名传播状态[www.whatsmydns.net/#CNAME/](https://www.whatsmydns.net/#CNAME/)
+查看域名传播状态 [www.whatsmydns.net/#CNAME/](https://www.whatsmydns.net/#CNAME/)
 
-Publishing on a Custom Domain (CNAME)
+Publishing on a Custom Domain (CNAME) 
 [help.instapage.com/hc/en-us/articles/205226088-Publishing-on-a-Custom-Domain-CNAME-](https://help.instapage.com/hc/en-us/articles/205226088-Publishing-on-a-Custom-Domain-CNAME-)
 
 Using a custom domain with GitHub Pages [help.github.com/articles/using-a-custom-domain-with-github-pages](https://help.github.com/articles/using-a-custom-domain-with-github-pages/)
