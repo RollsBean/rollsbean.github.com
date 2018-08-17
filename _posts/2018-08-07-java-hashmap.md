@@ -12,7 +12,7 @@ tags: Java HashMap Map
 
 Java中最常用到的Map就是HashMap了，下面就详细地从HashMap的源码中一探它的究竟。
 
-![Java](https://www.softexia.com/wp-content/uploads/2017/04/Java-logo.png)
+![HashMap Structure](http://www.codenuclear.com/wp-content/uploads/2017/11/bucket_entries.jpg)
 
 <!-- more -->
 
@@ -20,16 +20,13 @@ Java中最常用到的Map就是HashMap了，下面就详细地从HashMap的源�
 
 ----
 
-[HashMap](https://baike.baidu.com/item/hashmap) 是基于哈希表的 Map 接口的实现。此实现提供所有可选的映射操作，并允许使用 null 值和 
-null 键。（除了非同步和允许使用 null 之外，HashMap 类与 Hashtable 大致相同。）此类不保证映射的顺序，特别是它不保证该顺序恒久不变。 
-此实现假定哈希函数将元素适当地分布在各桶之间，可为基本操作（get 和 put）提供稳定的性能。迭代 collection 视图所需的时间与 HashMap 实例的“容量”
-（桶的数量）及其大小（键-值映射关系数）成比例。
+[HashMap](https://baike.baidu.com/item/hashmap) 是基于哈希表的 Map 接口的实现。允许使用 null 值和 
+null 键。（除了非同步和允许使用 null 之外，HashMap 类与 Hashtable 大致相同。）此类不保证映射的顺序，也就是说它的元素是无序的。
 <br>
-![HashMap Structure](http://www.codenuclear.com/wp-content/uploads/2017/11/bucket_entries.jpg)
 
 首先HashMap 是一个双列结构， 它是一个散列表， 存储方式是键值对存放。 它继承了AbstractMap, 实现了Map<K,V> Cloneable Serializable 接口
 <br>
-HashMap 的数据结构是数组Node[]加链表结构， 我们知道数组的查询很快，但是修改很慢， 因为数组定常， 所以添加或者减少元素都会导致数组扩容， 
+HashMap 的数据结构是*数组Node[]* 加 *链表*结构， 我们知道数组的查询很快，但是修改很慢， 因为数组定常， 所以添加或者减少元素都会导致数组扩容， 
 而链表结构恰恰相反, 它的查询慢，因为没有索引， 需要遍历链表查询， 但是它的修改很快， 不需要扩容数组， 只需要在首或者尾部添加即可。
 HashMap 正是应用了这两种数据结构， 以此来保证它的查询和修改都有很高的效率。
 
@@ -38,13 +35,6 @@ HashMap在调用put()方法存储元素的时候，会根据key的hash值来计�
 那么第二个在put的时候，key就会产生冲突，HashMap用链表的结构解决它，当HashMap发现当前的索引下已经有不为null的Node存在时，HashMap会在这个Node后面添加
 新元素，同一索引下的元素就组成了链表结构，Node和Node之间如何联系可以看下面Node类的源码分析。
 
-```java
-public class HashMap<K,V> extends AbstractMap<K,V>
-    implements Map<K,V>, Cloneable, Serializable {
-
-    private static final long serialVersionUID = 362498820763181265L;
-}
-```
 
 ### HashMap 里的几个参数：
 
@@ -88,17 +78,11 @@ static class Node<K,V> implements Map.Entry<K,V> {
         V value;
         // 链表结构, 这里的next将指向链表的下一个Node键值对
         Node<K,V> next; 
-
         Node(int hash, K key, V value, Node<K,V> next) {
-            this.hash = hash;
-            this.key = key;
-            this.value = value;
-            this.next = next;
+            ...
         }
-
         public final K getKey()        { return key; }
         public final V getValue()      { return value; }
-        public final String toString() { return key + "=" + value; }
     }
 ```
 
@@ -112,20 +96,14 @@ public V put(K key, V value) {
         return putVal(hash(key), key, value, false, true);
 }
 ```
-HashMap在put键值对的时候会计算key的hash 值， 调用hash()方法，hash()方法会调用Object的native方法hashCode()并且将计算之后的hash值高低位
+HashMap在put键值对的时候会计算key的hash 值， 调用`hash()`方法，hash()方法会调用Object的`native`方法`hashCode()`并且将计算之后的hash值高低位
 做异或运算， 增加hash复杂性。（Java里一个int类型占4个字节，一个字节是8bit，所以下面源码中的h与h右移16位就相当于高低位异或）
 ```java
 static final int hash(Object key) {
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
-
-//key.hashCode() 是Object类的native方法, 下面是jdk源码中的注释， 意思就是这个实现是将内部地址转换成一个integer， 但是并不是由Java实现的
-/**
-* (This is typically implemented by converting the internal
-* address of the object into an integer, but this implementation
-* technique is not required by the Java&trade; programming language.)
-*/
+//key.hashCode() 是Object类的native方法, 实现是将内部地址转换成一个integer， 但是并不是由Java实现的
 public native int hashCode();
 ```
 
@@ -189,7 +167,7 @@ public native int hashCode();
         }
         ++modCount;
         if (++size > threshold)
-            // put之后，如果元素个数大于
+            // put之后，如果元素个数大于当前的数组容量了，进行数组扩容
             resize();
         afterNodeInsertion(evict);
         return null;
