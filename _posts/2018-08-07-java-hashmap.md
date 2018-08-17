@@ -280,13 +280,14 @@ HashMap根据length和hash计算索引的公式为 hash & length - 1
 存在length+原索引的位置。HashMap定义了四个Node对象，`lo`开头的是低位的链表(原索引)，`hi`开头的是高位的链表(length+原索引，所以相当于是新
 length的高位)
 ```java
-Node<K,V> loHead = null, loTail = null;  // 
-Node<K,V> hiHead = null, hiTail = null;
+Node<K,V> loHead = null, loTail = null;  // 低位索引（原索引）上的元素
+Node<K,V> hiHead = null, hiTail = null;  // 高位索引（新索引）上的元素
 Node<K,V> next;
 do {
     next = e.next;
     // 判断是否需要放到新的索引上
     if ((e.hash & oldCap) == 0) {
+        // 最高非零位与操作结果是0，扩容后元素索引不发生变化
         if (loTail == null)
             loHead = e;
         else
@@ -294,6 +295,7 @@ do {
         loTail = e;
     }
     else {
+        // 需要将元素放到新的索引上
         if (hiTail == null)
             hiHead = e;
         else
@@ -303,10 +305,12 @@ do {
 } while ((e = next) != null);
 if (loTail != null) {
     loTail.next = null;
+    // 这部分的链表索引没有发生变化，将链表放到原索引上
     newTab[j] = loHead;
 }
 if (hiTail != null) {
     hiTail.next = null;
+    // 这部分的链表索引发生变化，将链表放到新索引上
     newTab[j + oldCap] = hiHead;
 }
 ```
