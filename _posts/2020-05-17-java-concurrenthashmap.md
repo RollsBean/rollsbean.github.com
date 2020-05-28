@@ -1,8 +1,8 @@
 ---
 layout: post
 author: Kevin Fan
-title:  "Java HashMap 深入学习(Java8)"
-date:   2018-08-08 17:00:00 +8
+title:  "ConcurrentHashMap 从源码出发分析其线程安全实现(Java8)"
+date:   2020-05-17 17:00:00 +8
 categories: Java
 tags: Java HashMap Map
 ---
@@ -11,174 +11,101 @@ tags: Java HashMap Map
 {:toc}
 
 
-HashMap是Java中Map的一个实现类，它是一个双列结构(数据+链表)，允许null键和值，它的键唯一，元素的存储无序，并且它是线程不安全的。数组+链表的结构
-使得它的查询和插入效率都很高。
-
-HashMap通过put(key,value)存值，通过get(key)获取key对应的元素，若元素已经存在，则更新它的值，如果要查询HashMap中是否存在某个key，
-可以用containsKey(key)来查询，如果存在则结果为true，不然，则为false。
-
-由于HashMap的这些特性，HashMap在Java中被广泛地使用，下面我们就通过HashMap的源码来一探究竟。
+ConcurrentHashMap是Java JUC(util.concurrent)包下的一个线程安全hashmap，同样的它和hashmap的API 数据结构基本一样，
+两者最大的区别就是线程是否安全。下面就通过源码来看看它是如何实现线程安全的还有实现上与hashmap到底有哪些区别
 
 
 ![HashMap Structure](http://www.codenuclear.com/wp-content/uploads/2017/11/bucket_entries.jpg)
 
 <!-- more -->
 
-## HashMap 简介
-
-----
-
-[HashMap](https://baike.baidu.com/item/hashmap) 是基于哈希表的 Map 接口的实现。允许使用 null 值和 
-null 键，但是键不允许重复。（除了非同步和允许使用 null 之外，HashMap 类与 HashTable 大致相同。）此类不保证映射的顺序，也就是说它的元素是无序的。
-<br>
-
-首先HashMap 是一个双列结构， 它是一个散列表， 存储方式是键值对存放。 它继承了AbstractMap, 实现了Map<K,V> Cloneable Serializable 接口
-<br>
-HashMap 的数据结构是*数组Node[]* 加 *链表*结构， 我们知道数组的查询很快，但是修改很慢， 因为数组定常， 所以添加或者减少元素都会导致数组扩容， 
-而链表结构恰恰相反, 它的查询慢，因为没有索引， 需要遍历链表查询， 但是它的修改很快， 不需要扩容数组， 只需要在首或者尾部添加即可。
-HashMap 正是应用了这两种数据结构， 以此来保证它的查询和修改都有很高的效率。
-
-HashMap在调用put()方法存储元素的时候，会根据key的hash值来计算它的索引，这个索引有什么用呢？HashMap使用这个索引来将这个键值对储存到对应的数组
-位置， 比如如果计算出来的索引是n，则它将存储在Node[n]这个位置，HashMap在计算索引的时候尽量保证它的离散，但是还是会有不同的key计算出来的索引是一样的，
-那么第二个在put的时候，key就会产生冲突，HashMap用链表的结构解决它，当HashMap发现当前的索引下已经有不为null的Node存在时，HashMap会在这个Node后面添加
-新元素，同一索引下的元素就组成了链表结构，Node和Node之间如何联系可以看下面Node类的源码分析。
-
-
-### HashMap 里的几个参数：
-
-* 默认初始长度 16
-```java
-static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
-```
-* 最大长度 2^30
-```java
-static final int MAXIMUM_CAPACITY = 1 << 30;
-```
-* 默认加载因子 0.75
-```java
-static final float DEFAULT_LOAD_FACTOR = 0.75f;
-final float loadFactor;
-```
-* 阈值，扩容的临界值（capacity * load factor）
-```java
-int threshold;
-```
-
-HashMap 构造函数
-```java
-// 初始长度 加载因子
-public HashMap(int initialCapacity, float loadFactor)
-
-public HashMap(int initialCapacity)
-// 无参构造
-public HashMap()
-// 初始化一个Map
-public HashMap(Map<? extends K, ? extends V> m)
-```
-非常重要的一个内部类，实现了Map.Entry，Node 是HashMap中的基本元素，每个键值对都储存在一个Node对象里，Node类有四个成员变量，`hash` key的哈希值，
-`key``value`键值对的key和value，`next` 也是Node类型，这个Node指向的是链表下一个键值对，也就是前文提到的hash冲突(碰撞)时HashMap的处理办法.
-
-Node类内部实现了`Map.Entry`接口中的 `getKey()` `getValue()`等方法，所以在遍历Map的时候我们可以用Map.entrySet()遍历。
-```java
-static class Node<K,V> implements Map.Entry<K,V> {
-        final int hash; // 哈希值
-        final K key;
-        V value;
-        // 链表结构, 这里的next将指向链表的下一个Node键值对
-        Node<K,V> next; 
-        Node(int hash, K key, V value, Node<K,V> next) {
-            ...
-        }
-        public final K getKey()        { return key; }
-        public final V getValue()      { return value; }
-    }
-```
 
 ### HashMap put() 流程
 
+`ConcurrentHashmap`与`HashMap`和基本的结构 API都一样，所以我们直奔主题，看一下关键API的实现。
 1. **put() 方法**
 
-`put()`主要是将key和value保存到Node数组中，HashMap根据key的hash值来确定它的索引，源码里put方法将调用内部的putVal()方法。
+put()方法首先会去计算hash，这里有一点区别，`HashMap`是h ^ (h >>> 16，高低位异或，但是Concurrent
+不一样，它是(h ^ (h >>> 16)) & HASH_BITS，异或之后和0x7fffffff进行与运算。这里没有想明白，根据计算加不加HASH_BITS
+计算的结果都是一样的，可能是出于特殊case(溢出？)的考虑吧。
 ```java
-public V put(K key, V value) {
-        return putVal(hash(key), key, value, false, true);
-}
-```
-HashMap在put键值对的时候会计算key的hash 值， 调用`hash()`方法，hash()方法会调用Object的`native`方法`hashCode()`并且将计算之后的hash值高低位
-做异或运算， 增加hash复杂性。（Java里一个int类型占4个字节，一个字节是8bit，所以下面源码中的h与h右移16位就相当于高低位异或）
-```java
-static final int hash(Object key) {
-        int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
-}
+static final int spread(int h) {
+        return (h ^ (h >>> 16)) & HASH_BITS;
+    }
 //key.hashCode() 是Object类的native方法, 实现是将内部地址转换成一个integer， 但是并不是由Java实现的
 public native int hashCode();
 ```
 
 2. **putVal() 方法**
 
-这部分是主要put的逻辑
- 1. 计算容量：根据map的size计算数组容量大小，如果元素数量也就是size大于数组容量×0.75，对数组进行扩容，扩容到原来的2倍。
- 2. 查找数据索引：根据key的hash值和数组长度找到Node数组索引
- 3. 储存：这里有以下几种情况（假设计算出的hash为`i`，数组为`tab`,变量以代码为例）
-    1. 当前索引为null，直接new一个Node并存到数组里，`tab[i]=newNode(hash, key, value, null)`
-    2. 数组不为空， 这时两个元素的hash是一样的，再调用equals方法判断key是否一致，相同，则覆盖当前的value，否则继续向下判断
-    3. 上面两个条件都不满足，说明hash发生冲突，Java 8里实现了红黑树，本篇也是基于Java 8的源码进行分析，在这里HashMap会判断当前数组上的元素
-    tab[i]是否是红黑树，如果是，调用红黑树的`putTreeVal`的put方法，它会将新元素以红黑树的数据结构储存到数组中；
-    4. 以上条件都不成立，表明tab[i]上有其他key的元素存在，并且没有转成红黑树结构，这时只需调用`tab[i].next`来遍历此链表，找到链表的尾然后将
-    元素存到当前链表的尾部。
+基本逻辑是一样的，这里主要看一下它的线程安全是如何实现的。`ConcurrentHashMap`是通过cas+synchronized锁来实现的，
+首先在put的时候判断当前数组索引下有没有元素，如果没有，我们直接用cas插入值，如果
+
 ```java
-    transient Node<K,V>[] table;
-    final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
-                   boolean evict) {
-        Node<K,V>[] tab; Node<K,V> p; int n, i;
-        // 根据当前的map size计算容量大小capacity， 主要实现是在resize()中计算capacity，需要扩容的时候， 长度左移一位（二倍）
-        if ((tab = table) == null || (n = tab.length) == 0)
-            n = (tab = resize()).length;
-        // 在这个地方， HashMap先判断key所属的数组元素是否存在。 (n - 1) & hash 计算数组下标，这里的位运算等同于取模运算
-        // 这里的table 是HashMap的数组， 数组为空就新建一个数组 newNode(hash, key, value, null)
-        if ((p = tab[i = (n - 1) & hash]) == null)
-            tab[i] = newNode(hash, key, value, null);
+final V putVal(K key, V value, boolean onlyIfAbsent) {
+    // key 不能为null
+    if (key == null || value == null) throw new NullPointerException();
+    int hash = spread(key.hashCode());
+    int binCount = 0;
+    for (Node<K,V>[] tab = table;;) {
+        Node<K,V> f; int n, i, fh;
+        if (tab == null || (n = tab.length) == 0)
+            tab = initTable();
+        else if ((f = tabAt(tab, i = (n - 1) & hash)) == null) {
+            if (casTabAt(tab, i, null,
+                         new Node<K,V>(hash, key, value, null)))
+                break;                   // no lock when adding to empty bin
+        }
+        else if ((fh = f.hash) == MOVED)
+            tab = helpTransfer(tab, f);
         else {
-            //数组不为空， 先判断key是否存在， 存在 就覆盖value
-            Node<K,V> e; K k;
-            if (p.hash == hash &&
-                ((k = p.key) == key || (key != null && key.equals(k))))
-                e = p;
-            // 如果此链表是红黑树结构（TreeNode）
-            else if (p instanceof TreeNode)
-                e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
-            else {
-                // 循环当前链表， 找出p.next为空的位置就是链表的末端， 添加上
-                for (int binCount = 0; ; ++binCount) {
-                    if ((e = p.next) == null) {
-                        p.next = newNode(hash, key, value, null);
-                        // 这里会判断这个链表是否需要转换为红黑树链表
-                        if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-                            treeifyBin(tab, hash);
-                        break;
+            V oldVal = null;
+            synchronized (f) {
+                if (tabAt(tab, i) == f) {
+                    if (fh >= 0) {
+                        binCount = 1;
+                        for (Node<K,V> e = f;; ++binCount) {
+                            K ek;
+                            if (e.hash == hash &&
+                                ((ek = e.key) == key ||
+                                 (ek != null && key.equals(ek)))) {
+                                oldVal = e.val;
+                                if (!onlyIfAbsent)
+                                    e.val = value;
+                                break;
+                            }
+                            Node<K,V> pred = e;
+                            if ((e = e.next) == null) {
+                                pred.next = new Node<K,V>(hash, key,
+                                                          value, null);
+                                break;
+                            }
+                        }
                     }
-                    if (e.hash == hash &&
-                        ((k = e.key) == key || (key != null && key.equals(k))))
-                        break;
-                    p = e;
+                    else if (f instanceof TreeBin) {
+                        Node<K,V> p;
+                        binCount = 2;
+                        if ((p = ((TreeBin<K,V>)f).putTreeVal(hash, key,
+                                                       value)) != null) {
+                            oldVal = p.val;
+                            if (!onlyIfAbsent)
+                                p.val = value;
+                        }
+                    }
                 }
             }
-            if (e != null) { // existing mapping for key
-                V oldValue = e.value;
-                if (!onlyIfAbsent || oldValue == null)
-                    e.value = value;
-                afterNodeAccess(e);
-                return oldValue;
+            if (binCount != 0) {
+                if (binCount >= TREEIFY_THRESHOLD)
+                    treeifyBin(tab, i);
+                if (oldVal != null)
+                    return oldVal;
+                break;
             }
         }
-        ++modCount;
-        if (++size > threshold)
-            // put之后，如果元素个数大于当前的数组容量了，进行数组扩容
-            resize();
-        afterNodeInsertion(evict);
-        return null;
     }
+    addCount(1L, binCount);
+    return null;
+}
 ```
 
 ### HashMap 的get()
