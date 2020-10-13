@@ -1,0 +1,163 @@
+{
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "my_analyzer": {
+                    "tokenizer": "my_tokenizer"
+                },
+                "cn_analyzer": {
+                    "tokenizer": "cn_tokenizer",
+                    "filter": "lowercase"
+                }
+            },
+            "tokenizer": {
+                "my_tokenizer": {
+                    "type": "ngram",
+                    "min_gram": 2,
+                    "max_gram": 100
+                },
+                "cn_tokenizer": {
+                    "type": "pattern",
+                    "pattern": "|"
+                }
+            }
+        },
+        "max_ngram_diff": 100
+    },
+    "mappings": {
+        "_default_": {
+            "date_detection": true,
+            "dynamic_templates": [
+                {
+                    "dates": {
+                        "path_match": "extraAttr_[\\d]_5_[\\d]+.attribute_value(_display)?",
+                        "match_pattern": "regex",
+                        "mapping": {
+                            "type": "date",
+                            "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd HH:mm:ss.S||yyyy-MM-dd HH:mm:ss.SSS||yyyy-MM-dd HH:mm:ss.SS||dateOptionalTime"
+                        }
+                    }
+                },
+                {
+                    "attr": {
+                        "match": "extraAttr*",
+                        "match_pattern": "regex",
+                        "mapping": {
+                            "type": "nested"
+                        }
+                    }
+                }
+            ]
+        },
+        "table": {
+            "properties": {
+                "dataSourceId": {
+                    "type": "long"
+                },
+                "dataSourceType": {
+                    "type": "integer"
+                },
+                "dbId": {
+                    "type": "long"
+                },
+                "dbName": {
+                    "type": "text",
+                    "analyzer": "my_analyzer",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "id": {
+                    "type": "long"
+                },
+                "syncDate": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+                },
+                "syncStatus": {
+                    "type": "integer"
+                },
+                "tableCreateAt": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+                },
+                "tableHot": {
+                    "type": "integer"
+                },
+                "tableName": {
+                    "type": "text",
+                    "analyzer": "my_analyzer",
+                    "search_analyzer": "standard",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "tableNameCn": {
+                    "type": "text",
+                    "analyzer": "cn_analyzer",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "tableOwner": {
+                    "type": "long"
+                },
+                "tableOwnerName": {
+                    "type": "text",
+                    "analyzer": "my_analyzer",
+                    "search_analyzer": "standard",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    }
+                },
+                "tableStorage": {
+                    "type": "integer"
+                },
+                "tenantId": {
+                    "type": "long"
+                },
+                "subModelId": {
+                    "type": "long"
+                },
+                "schemaName": {
+                    "type": "text"
+                },
+                "affectCount": {
+                    "type": "integer"
+                },
+                "useCount": {
+                    "type": "integer"
+                },
+                "updateAt": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+                },
+                "createAt": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+                },
+                "updateBy": {
+                    "type": "long"
+                },
+                "createBy": {
+                    "type": "long"
+                },
+                "isDeleted": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
