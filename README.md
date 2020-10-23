@@ -42,3 +42,6 @@ Ruby: [https://www.ruby-lang.org/en/](https://www.ruby-lang.org/en/)
 Disqus: [https://disqus.com](https://disqus.com)
 
 <img src="http://foreveryoungadult.com/_uploads/images-new/50197/disqustips__span.png" width="30%" height="30%"/>
+
+-----------2020-10-23 Update-----------
+Domain update to：[yaqianwu.top](yaqianwu.top)
