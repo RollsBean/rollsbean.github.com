@@ -12,7 +12,6 @@ author: Kevin Fan
 
 Hadoop是一个开源的分布式文件系统（HDFS）,作为大数据的基础，它是Hive，Saprk,Hbase等数据库、计算引擎的文件系统。
 
-[Elasticsearch Git Repo](https://github.com/elastic/elasticsearch.git)
 <!-- more -->
 
 ### Hadoop 安装
