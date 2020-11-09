@@ -46,3 +46,47 @@ echo "${your_name}678"
 
 ### Shell使用
 
+
+#### 问题
+
+```shell script
+reindexTableJson='{
+  "source": {
+    "index": "dtstack_assets_table_v1"
+  },
+  "dest": {
+    "index": "dtstack_assets_table_v2"
+  }
+}'
+http_code=$(curl -sSL -w '%{http_code}' ${curlParamU} -o ./response5.txt -XPOST "${url}/_reindex" -H 'Content-Type: application/json' -d ${reindexTableJson})
+```
+
+```shell script
+curl: (6) Could not resolve host: "source"
+curl: (3) unmatched brace in URL position 1:
+{
+ ^
+curl: (6) Could not resolve host: "index"
+curl: (6) Could not resolve host: "dtstack_assets_column_v1"
+curl: (3) unmatched close brace/bracket in URL position 1:
+},
+ ^
+curl: (6) Could not resolve host: "dest"
+curl: (3) unmatched brace in URL position 1:
+{
+ ^
+curl: (6) Could not resolve host: "index"
+curl: (6) Could not resolve host: "dtstack_assets_column_v2"
+curl: (3) unmatched close brace/bracket in URL position 1:
+}
+ ^
+curl: (3) unmatched close brace/bracket in URL position 1:
+}
+ ^
+./increment_v2.sh: line 138: [: 500000000000000000000: integer expression expected
+method: reindex4Column
+ 将数据迁入新索引dtstack_assets_column_v2失败}
+{"error":{"root_cause":[{"type":"json_e_o_f_exception","reason":"Unexpected end-of-input: expected close marker for Object (start marker at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@9b43f7f; line: 1, column: 1])\n at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@9b43f7f; line: 1, column: 3]"}],"type":"json_e_o_f_exception","reason":"Unexpected end-of-input: expected close marker for Object (start marker at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@9b43f7f; line: 1, column: 1])\n at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@9b43f7f; line: 1, column: 3]"},"status":500}
+```
+
+原因： `-d ${reindexTableJson}` 未加引号 修改为 `-d "${reindexTableJson}"`
