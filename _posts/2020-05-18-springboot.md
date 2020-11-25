@@ -16,7 +16,7 @@ SpringBoot
 <!-- more -->
 
 
-### 
+### Springboot启动类注解
 
 @SpringBootApplication 包含了@SpringBootConfiguration @EnableAutoConfiguration @ComponentScan等
 

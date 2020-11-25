@@ -35,6 +35,7 @@ Spring的注入只会发生一次，所以多例实例注入到单例实例中�
 
 #### Bean加载
 
+
 ```java
 public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements SingletonBeanRegistry {
 
@@ -84,14 +85,42 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 
 	/** Set of registered singletons, containing the bean names in registration order. */
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
+
+
+    /**
+     * Return the (raw) singleton object registered under the given name,
+     * creating and registering a new one if none registered yet.
+     * @param beanName the name of the bean
+     * @param singletonFactory the ObjectFactory to lazily create the singleton
+     * with, if necessary
+     * @return the registered singleton object
+     */
+    public Object getSingleton(String beanName, ObjectFactory<?> singletonFactory) {
+        synchronized (this.singletonObjects) {
+            Object singletonObject = this.singletonObjects.get(beanName);
+            if (singletonObject == null) {
+                singletonObject = singletonFactory.getObject();
+                newSingleton = true;
+            }
+            /*
+            ...
+            */
+            if (newSingleton) {
+                addSingleton(beanName, singletonObject);
+            }
+        }
+    }
     
     @Nullable
     protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+        // 从一级缓存singletonObjects获取bean，bean已初始化好，可以直接使用
         Object singletonObject = this.singletonObjects.get(beanName);
         if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
             synchronized (this.singletonObjects) {
+                // 从二级缓存earlySingletonObjects获取bean，bean还没有填充属性
                 singletonObject = this.earlySingletonObjects.get(beanName);
                 if (singletonObject == null && allowEarlyReference) {
+                    // 从三级缓存singletonFactories获取bean，bean工厂对象，还未实例化，只是bean的定义
                     ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
                     if (singletonFactory != null) {
                         singletonObject = singletonFactory.getObject();
@@ -103,6 +132,17 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
         }
         return singletonObject;
     }
+
+    // Add the given singleton object to the singleton cache of this factory.
+    protected void addSingleton(String beanName, Object singletonObject) {
+        synchronized (this.singletonObjects) {
+            this.singletonObjects.put(beanName, singletonObject);
+            this.singletonFactories.remove(beanName);
+            this.earlySingletonObjects.remove(beanName);
+            this.registeredSingletons.add(beanName);
+        }
+    }
+
 }
 ```
 
