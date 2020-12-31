@@ -19,6 +19,7 @@ Hadoop是一个开源的分布式文件系统（HDFS）,作为大数据的基础
 #### Hadoop 安装包下载
 
 安装的版本，当前的最新版 `hadoop-3.3.0`版本
+
 ![hadoop-download](../images/bigdata/hadoop/hadoop-download.jpg)
 下载地址[https://mirror.bit.edu.cn/apache/hadoop/common/hadoop-3.3.0/](https://mirror.bit.edu.cn/apache/hadoop/common/hadoop-3.3.0/)
 
@@ -134,19 +135,35 @@ Yarn管理界面： `http://localhost:8088/cluster`
 **启动**
 
 > 启动namenode
+>
 >hadoop namenode -format
+>
+>
 > 启动hdfs
+>
 >hadoop-3.3.0/sbin/start-dfs.sh
+>
+>
 > 启动yarn
+>
 >hadoop-3.3.0/sbin/start-yarn.sh
 
 **停止**
 
 > 停止hdfs和yarn
+>
 >sbin/stop-hdfs.sh
+>
 >sbin/stop-yarn.sh
-重新格式化namenode
-bin/hdfs namenode -format
-启动hdfs和yarn
-sbin/start-hdfs.sh
-sbin/start-yarn.sh
+>
+>
+>重新格式化namenode
+>
+>bin/hdfs namenode -format
+>
+>
+>启动hdfs和yarn
+>
+>sbin/start-hdfs.sh
+>
+>sbin/start-yarn.sh
