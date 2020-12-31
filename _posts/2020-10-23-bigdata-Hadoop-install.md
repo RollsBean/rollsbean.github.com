@@ -34,10 +34,19 @@ mac参考[Mac OS X 上搭建 Hadoop 开发环境指南](https://zhuanlan.zhihu.c
 #### 修改Hadoop配置文件
 
 * hadoop-env.sh
+修改Hadoop系统变量，设置JAVA_HOME路径，不使用 `$JAVA_HOME`
+```shell script
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_271.jdk/Contents/Home
+export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+```
 * core-site.xml
+配置defaultFS 和临时文件存放目录
 * hdfs-site.xml
+存放的数据路径
 * mapred-site.xml
+设置资源管理为Yarn
 * yarn-site.xml
+配置yarn
 
 #### 启动NameNode
 
@@ -62,8 +71,10 @@ mac参考[Mac OS X 上搭建 Hadoop 开发环境指南](https://zhuanlan.zhihu.c
 
 #### 启动Yarn
 
-`./ start-yarn.sh`
+`./start-yarn.sh`
+
 ![hdp-yarn-start](../images/bigdata/hadoop/hdp-yarn-start.jpg)
+
 `jps` 发现ResourceManager 没有启动
 
 cd到logs目录
@@ -105,7 +116,7 @@ jingxingdeMacBook-Pro:sbin kevin$
 
 </property>
 ```
-接下来参考 [https://blog.csdn.net/Neone__u/article/details/53741786](https://blog.csdn.net/Neone__u/article/details/53741786)的步骤，
+接下来参考 [https://blog.csdn.net/Neone__u/article/details/53741786](https://blog.csdn.net/Neone__u/article/details/53741786) 的步骤，
 停掉dfs和yarn，删除hdfs的name和data，重新format namenode，再启动dfs和yarn
 
 #### 安装完成
@@ -117,3 +128,25 @@ Yarn管理界面： `http://localhost:8088/cluster`
 ![hdp-web-50070](../images/bigdata/hadoop/hdp-web-50070.jpg)
 
 至此，Hadoop 配置完成
+
+#### 启停步骤
+
+**启动**
+
+> 启动namenode
+>hadoop namenode -format
+> 启动hdfs
+>hadoop-3.3.0/sbin/start-dfs.sh
+> 启动yarn
+>hadoop-3.3.0/sbin/start-yarn.sh
+
+**停止**
+
+> 停止hdfs和yarn
+>sbin/stop-hdfs.sh
+>sbin/stop-yarn.sh
+重新格式化namenode
+bin/hdfs namenode -format
+启动hdfs和yarn
+sbin/start-hdfs.sh
+sbin/start-yarn.sh
