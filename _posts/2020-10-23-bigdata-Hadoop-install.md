@@ -107,6 +107,8 @@ jingxingdeMacBook-Pro:sbin kevin$
 
 #### 浏览器访问50070端口无法打开
 
+Hadoop HDFS 管理界面: [http://localhost:50070](http://localhost:50070)
+
 修改`hdfs-site.xml`
 ```xml
 <property>
@@ -122,10 +124,10 @@ jingxingdeMacBook-Pro:sbin kevin$
 
 #### 安装完成
 
-Yarn管理界面： `http://localhost:8088/cluster`
+**Yarn管理页面：** [http://localhost:8088/cluster](http://localhost:8088/cluster)
 ![hdp-yarn-web](../images/bigdata/hadoop/hdp-yarn-web.jpg)
 
-50070界面：
+**HDFS管理页面：** [http://localhost:50070](http://localhost:50070)
 ![hdp-web-50070](../images/bigdata/hadoop/hdp-web-50070.jpg)
 
 至此，Hadoop 配置完成
