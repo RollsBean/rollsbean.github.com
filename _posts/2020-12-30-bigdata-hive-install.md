@@ -50,6 +50,7 @@ export PATH
 ```
 让配置生效 `source ~/.bash_profile`
 
+#### 运行hive
 这时候运行hive报错
 
 ```shell script
@@ -126,3 +127,85 @@ Exception in thread "main" java.lang.RuntimeException: java.net.ConnectException
 	at org.apache.hadoop.util.RunJar.main(RunJar.java:236)
 Caused by: java.net.ConnectException: Call From jingxingdeMacBook-Pro.local/192.168.106.171 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
 ```
+
+#### 配置Hive metastore
+
+修改 `apache-hive-2.3.7-bin/conf/hive-default.xml`的metastore信息
+
+查找如下四个配置，并修改
+```xml
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>jdbc:mysql://localhost/metastore</value>
+</property>
+<property>
+  <name>javax.jdo.option.ConnectionDriverName</name>
+  <value>com.mysql.jdbc.Driver</value>
+</property>
+<property>
+  <name>javax.jdo.option.ConnectionUserName</name>
+  <value>hiveuser</value>
+</property>
+<property>
+  <name>javax.jdo.option.ConnectionPassword</name>
+  <value>password</value>
+</property>
+```
+
+再次运行 执行 `show tables`报错
+```shell script
+hive> show tables;
+FAILED: SemanticException org.apache.hadoop.hive.ql.metadata.HiveException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
+hive>
+```
+
+处理： 修改 `hive-default.xml`文件名为 `hive-site.xml`
+
+相关问题：
+[https://stackoverflow.com/questions/35449274/java-lang-runtimeexception-unable-to-instantiate-org-apache-hadoop-hive-ql-meta](https://stackoverflow.com/questions/35449274/java-lang-runtimeexception-unable-to-instantiate-org-apache-hadoop-hive-ql-meta)
+
+
+问题：
+```shell script
+Caused by: java.net.URISyntaxException: Relative path in absolute URI: ${system:java.io.tmpdir%7D/$%7Bsystem:user.name%7D
+	at java.net.URI.checkPath(URI.java:1823)
+	at java.net.URI.<init>(URI.java:745)
+	at org.apache.hadoop.fs.Path.initialize(Path.java:260)
+	... 12 more
+```
+处理：
+在 `conf/hive-site.xml`中添加如下配置
+```xml
+  <property>
+    <name>system:java.io.tmpdir</name>
+    <value>/tmp/hive/java</value>
+  </property>
+  <property>
+    <name>system:user.name</name>
+    <value>${user.name}</value>
+  </property>
+```
+
+相关问题：[https://stackoverflow.com/questions/27099898/java-net-urisyntaxexception-when-starting-hive](https://stackoverflow.com/questions/27099898/java-net-urisyntaxexception-when-starting-hive)
+
+最后还是报HiveException，原因是hive的lib里没有MySQL 驱动包
+
+处理：添加MySQL驱动包到 `hive/lib`里
+
+[mysql-connector-java-5.1.49.jar](../file/bigData/hive/mysql-connector-java-5.1.49.jar)
+
+再次运行：
+
+`hive --service metastore`
+
+初始化元数据库 `schematool -dbType mysql -initSchema`
+
+运行:
+```xml
+   <property>
+     <name>hive.metastore.schema.verification</name>
+     <value>false</value>
+   </property>
+```
+
+**结果：** 运行SQL还是失败，貌似datanode都没有启动好。

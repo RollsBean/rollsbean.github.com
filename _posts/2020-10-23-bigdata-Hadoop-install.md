@@ -132,6 +132,18 @@ Hadoop HDFS 管理界面: [http://localhost:50070](http://localhost:50070)
 
 至此，Hadoop 配置完成
 
+Hadoop基本操作：
+```shell script
+# 查看根目录下的文件及文件夹
+hadoop fs -ls /
+# 在根目录下创建一个文件夹 testdata　　　　 
+hadoop fs -mkdir /test
+# 移除某个文件
+hadoop fs -rm /.../...
+# 移除某个空的文件夹
+hadoop fs -rm /...
+```
+
 #### 启停步骤
 
 **启动**

@@ -1,6 +1,6 @@
 ## The First Blog 
 [![GitHub stars](https://img.shields.io/github/stars/RollsBean/rollsbean.github.io.svg)](https://github.com/RollsBean/rollsbean.github.com/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/RollsBean/rollsbean.github.io.svg)](https://github.com/RollsBean/rollsbean.github.com/network)
+[![GitHub forks](https://img.shields.io/github/forks/RollsBean/rollsbean.github.io.svg)](https://github.com/RollsBean/rollsbean.github.com/fork)
 [![GitHub issues](https://img.shields.io/github/issues/RollsBean/rollsbean.github.io.svg)](https://github.com/RollsBean/rollsbean.github.com/issues)
 [![GitHub release](https://img.shields.io/github/release/RollsBean/rollsbean.github.io.svg)](https://github.com/RollsBean/rollsbean.github.com/releases)
 
@@ -44,4 +44,5 @@ Disqus: [https://disqus.com](https://disqus.com)
 <img src="http://foreveryoungadult.com/_uploads/images-new/50197/disqustips__span.png" width="30%" height="30%"/>
 
 -----------2020-10-23 Update-----------
-Domain update to：[yaqianwu.top](yaqianwu.top)
+
+Domain has updated to：[yaqianwu.top](http://www.yaqianwu.top)
