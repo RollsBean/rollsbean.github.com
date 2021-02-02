@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Presto 入门安装"
-date:   2018-11-25 15:25:05 +8
+date:   2020-11-25 15:25:05 +8
 categories: Presto
 tags: Presto Bigdata Java
 author: Kevin Fan

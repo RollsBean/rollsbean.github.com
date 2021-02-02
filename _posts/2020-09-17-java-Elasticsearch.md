@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Elasticsearch 入门"
-date:   2018-09-17 11:25:05 +8
+date:   2020-09-17 11:25:05 +8
 categories: Elasticsearch
 tags: Elasticsearch Lucene Kibana ELK Java
 author: Kevin Fan

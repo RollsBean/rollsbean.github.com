@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Shell 入门"
-date:   2018-09-27 15:25:05 +8
+date:   2020-09-27 15:25:05 +8
 categories: Shell
 tags: Shell Linux Bath
 author: Kevin Fan

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Hive 入门安装"
-date:   2018-12-30 10:25:05 +8
+date:   2020-12-30 10:25:05 +8
 categories: Hive
 tags: Hive Bigdata Java
 author: Kevin Fan

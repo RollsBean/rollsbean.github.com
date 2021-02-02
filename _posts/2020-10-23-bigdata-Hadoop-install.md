@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Hadoop 入门安装"
-date:   2018-10-23 10:25:05 +8
+date:   2020-10-23 10:25:05 +8
 categories: Hadoop
 tags: Hadoop Bigdata Java
 author: Kevin Fan
