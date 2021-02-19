@@ -2,7 +2,7 @@
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/RollsBean/rollsbean.github.com?style=flat-square)
 ![GitHub forks](https://img.shields.io/github/forks/RollsBean/rollsbean.github.com?style=flat-square)
-![GitHub issues](https://img.shields.io/github/issues/RollsBean/rollsbean.github.com)
+![GitHub issues](https://img.shields.io/github/issues/RollsBean/rollsbean.github.com?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/RollsBean/rollsbean.github.com?style=flat-square)
 
 Blog Link: [rollsbean.com](https://rollsbean.com)

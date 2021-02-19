@@ -1,9 +1,9 @@
 # 我的技术博客
 
-[![GitHub stars](https://img.shields.io/github/stars/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/stars/RollsBean/rollsbean.github.com.svg)
-[![GitHub forks](https://img.shields.io/github/forks/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/forks/RollsBean/rollsbean.github.com.svg)
-[![GitHub issues](https://img.shields.io/github/issues/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/issues/RollsBean/rollsbean.github.com.svg)
-[![GitHub release](https://img.shields.io/github/release/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/release/RollsBean/rollsbean.github.io.svg)
+![GitHub Repo stars](https://img.shields.io/github/stars/RollsBean/rollsbean.github.com?style=flat-square)
+![GitHub forks](https://img.shields.io/github/forks/RollsBean/rollsbean.github.com?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/RollsBean/rollsbean.github.com?style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/RollsBean/rollsbean.github.com?style=flat-square)
 
 博客链接: [rollsbean.com](https://rollsbean.com)
 
