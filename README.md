@@ -1,6 +1,6 @@
 # The First Blog 
 
-[![GitHub stars](https://img.shields.io/github/stars/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/stars/RollsBean/rollsbean.github.com.svg)
+![GitHub Repo stars](https://img.shields.io/github/stars/RollsBean/rollsbean.github.com?style=flat-square)
 [![GitHub forks](https://img.shields.io/github/forks/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/forks/RollsBean/rollsbean.github.com.svg)
 [![GitHub issues](https://img.shields.io/github/issues/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/issues/RollsBean/rollsbean.github.com.svg)
 [![GitHub release](https://img.shields.io/github/release/RollsBean/rollsbean.github.io.svg)](https://img.shields.io/github/release/RollsBean/rollsbean.github.io.svg)
