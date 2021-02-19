@@ -160,13 +160,8 @@ Java 类方法命名规范
 >Ordinator  
 >Leader  
 >Master  
->1  
->2  
->3  
->4  
->5  
->6  
->交易  
+
+#### 交易  
 >business  
 >deal  
 >trade  
@@ -210,3 +205,6 @@ Java 类方法命名规范
 >Weaver  
 >Adapter  
 
+#### 属性填充
+
+>Aware(参考Spring属性填充接口 org.springframework.beans.factory.Aware)  
