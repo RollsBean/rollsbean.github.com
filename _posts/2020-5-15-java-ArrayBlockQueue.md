@@ -23,7 +23,7 @@ author: Kevin Fan
 
 如下图所示，`ArrayBlockingQueue`的顶层接口也是`Collection`,并直接实现了`BlockingQueue`.
 
-![ArrayBlockQueue类图结构](/images/queue/ArrayBlockingQueue%20structure.PNG)
+![ArrayBlockQueue类图结构](/images/queue/arrayblockqueue-structure.png)
 
 ### 源码分析
 
