@@ -1,4 +1,17 @@
-# Java 引用
+---
+layout: post
+title:  "Java 引用"
+date:   2021-05-19 20:00:00 +8
+categories: Java
+tags: Java Reference
+author: Kevin Fan
+---
+
+* content
+  {:toc}
+
+
+<!-- more -->
 
 ## 正常引用（强引用）
 

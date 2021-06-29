@@ -1,4 +1,17 @@
-# GIT 修改已提交的邮箱和作者
+---
+layout: post
+title:  "GIT 修改已提交的邮箱和作者"
+date:   2021-03-13 20:00:00 +8
+categories: GIT
+tags: GIT
+author: Kevin Fan
+---
+
+* content
+  {:toc}
+
+GIT 修改已提交的邮箱和作者
+<!-- more -->
 
 ## 背景
 
