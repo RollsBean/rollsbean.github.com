@@ -113,7 +113,7 @@ spec:
 
 ### kubectl 概述
 
-**kubectl** 是用来管理 Kubernetes 集群的命令行工具。
+**kubectl** 是用来管理 Kubernetes 集群的命令行工具。工作中经常使用的就是这个命令。
 
 #### 语法
 
@@ -143,5 +143,80 @@ kubectl [command] [TYPE] [NAME] [flags]
 | top           | kubectl top [flags] [options]                                | 显示资源（CPU/内存/存储）的使用情况。 |
 | run           | kubectl run NAME --image=image [--env="key=value"] [--port=port] [--dry-run=server \|client \|none] [--overrides=inline-json] [flags] | 在集群上运行指定的镜像。              |
 
- 
+#### 示例（以 docker 为例）
 
+#### kubectl get 获取 pod 信息
+
+```shell
+# $name: 命名空间的名字
+kubectl get pod -n $name
+```
+
+打印的列表为
+```text
+NAME                              READY   STATUS     RESTARTS    AGE
+application-59227859bd-fawef       1/1    Running     2          16h
+```
+
+#### exec 命令
+
+```shell
+$ kubectl exec (POD | TYPE/NAME) [-c CONTAINER] [flags] -- COMMAND [args...]
+```
+
+用于运行容器中的命令
+
+**进入到容器命令行**
+
+`-n` 指定 namespace，不指定会默认查 default 下的容器。  
+`-- /bin/bash` 运行的命令。
+
+ ```shell
+kubectl exec -n $namespace -it $containerName -- /bin/bash
+```
+
+#### describe
+
+name 可以是前缀
+
+```shell
+$ kubectl describe (-f FILENAME | TYPE [NAME_PREFIX | -l label] | TYPE/NAME)
+```
+
+例如：
+```shell
+kubectl describe pod $name -n $namespace
+```
+
+#### top
+
+查看pod的（CPU/内存）资源
+
+```shell
+$ kubectl top pod [NAME | -l label]
+```
+
+要始终记着要加上 -n namespace
+
+例如：
+```shell
+kubectl top pod $name -n $namespace
+```
+
+#### logs
+
+如果 pod 只有一个 container，即只有一个副本，则可以不写 container name
+
+```shell
+$ kubectl logs [-f] [-p] (POD | TYPE/NAME) [-c CONTAINER]
+```
+
+`--tail=` 只显示最后多少条日志，和 Linux tail 命令相似
+
+例如：
+
+```shell
+kubectl logs $name -n $namespace
+
+kubectl logs --tail=20 $name -n $namespace
+```
