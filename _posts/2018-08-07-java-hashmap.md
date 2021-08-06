@@ -20,7 +20,7 @@ HashMap通过put(key,value)存值，通过get(key)获取key对应的元素，若
 由于HashMap的这些特性，HashMap在Java中被广泛地使用，下面我们就通过HashMap的源码来一探究竟。
 
 
-![HashMap Structure](http://www.codenuclear.com/wp-content/uploads/2017/11/bucket_entries.jpg)
+![HashMap Structure](../images/java/jdk/map/java%20hashmap%20structure.png)
 
 <!-- more -->
 
@@ -203,10 +203,10 @@ final Node<K,V> getNode(int hash, Object key) {
         Node<K,V>[] tab; 
         Node<K,V> first, e; 
         int n; K k;
-        // 判断数组不为空， 桶不为空
+        // 判断数组不为空， 对应的数组位置元素不为空
         if ((tab = table) != null && (n = tab.length) > 0 &&
             (first = tab[(n - 1) & hash]) != null) {
-            // 先查询桶的第一个元素
+            // 先查询此数组位置的第一个元素
             if (first.hash == hash && // always check first node
                 ((k = first.key) == key || (key != null && key.equals(k))))
                 return first;
@@ -215,7 +215,7 @@ final Node<K,V> getNode(int hash, Object key) {
                 // 如果是红黑树， 则用红黑树的方法查询
                 if (first instanceof TreeNode)
                     return ((TreeNode<K,V>)first).getTreeNode(hash, key);
-                // 不是红黑树， 遍历桶， 直到找到对应的key， 返回
+                // 不是红黑树， 遍历此数组位置的链表， 直到找到对应的key， 返回
                 do {
                     // 1. 判断hash值是否相等； 2. 判断key相等。 防止hash碰撞发生
                     if (e.hash == hash &&
@@ -234,8 +234,8 @@ final Node<K,V> getNode(int hash, Object key) {
 key的hash和数组长度计算元素位置的，那当数组长度发生变化时，如果不重新计算元素的位置，当我们get元素的时候就找不到正确的元素了，所以HashMap在
 扩容的同时也重新对数组元素进行了计算。
 
-这时还有一个问题，re-hash的时候同一个桶(bucket)上的链表会重新排列还是链表仍然在同一桶上。考虑这个问题的时候先考虑这一点，
-那么当它扩容的时候同一个桶上的元素再与新数组长度做与运算`&`时，可能计算出来的数组索引不同。假如数组长度是16即2<sup>4</sup>，扩容后的数组长度将是
+这时还有一个问题，re-hash的时候同一个数组下标上的链表会重新排列还是链表仍然在同一数组下标上。考虑这个问题的时候先考虑这一点，
+那么当它扩容的时候同一个数组下标上的元素再与新数组长度做与运算`&`时，可能计算出来的数组索引不同。假如数组长度是16即2<sup>4</sup>，扩容后的数组长度将是
 32即2<sup>5</sup>，我们用二进在下面来演示与运算
 
 ```
@@ -257,11 +257,11 @@ HashMap根据length和hash计算索引的公式为 hash & length - 1
 ```markdown
         图示：
                     0001 1111    =     0001 0000 + 0000 1111
-                    1010 1010          1010 1010   1010 1010
+                &   1010 1010          1010 1010   1010 1010
                     ----------------------------------------
-                    0001 1111    =     0001 0000   0000 1111  
+                    0000 1010    =     0000 0000   0000 1010  
 ```  
-源码中就是用这个思路来re-hash一个桶上的链表，`e.hash & oldCap == 0`判断hash对应length的最高非0位是否是1，是1则把元素存在原索引，否则将元素
+源码中就是用这个思路来re-hash一个数组下标上的链表，`e.hash & oldCap == 0`判断hash对应length的最高非0位是否是1，是1则把元素存在原索引，否则将元素
 存在length+原索引的位置。HashMap定义了四个Node对象，`lo`开头的是低位的链表(原索引)，`hi`开头的是高位的链表(length+原索引，所以相当于是新
 length的高位)
 ```java
@@ -305,17 +305,17 @@ if (hiTail != null) {
 - HashMap 底层是**数组+链表**结构，数组长度默认是16，当元素的个数大于数组长度×0.75时，数组会扩容
 - HashMap 是**散列表**， 它是根据key的hash值来找到对应的数组索引来储存， 发生hash碰撞的时候（计算出来的hash值相等）HashMap将采用拉链式来储存元素，
 也就是我们所说的单向链表结构。
-- 在Java7中， 如果hash碰撞，导致拉链过长，查询的性能会下降， 所以在Java8中添加**红黑树结构**， 当一个桶的长度超过8时，将其转为红黑树链表， 
+- 在Java7中， 如果hash碰撞，导致拉链过长，查询的性能会下降， 所以在Java8中添加**红黑树结构**， 当一个数组下标上链表的长度超过8时，将其转为红黑树链表， 
 如果小于6， 又重新转换为普通链表
 - **re-hash**再哈希问题 HashMap扩容的时候会重新计算每一个元素的索引，重新计算之后的索引只有两种可能，要么等于原索引要么等于原索引加上原数组长度
 - 由上一条可知，每次扩容，整个hash table都需要重新计算索引，非常耗时，所以在日常使用中一定要注意这个问题
 - HashMap 与HashTable
     - HashMap 是**线程不安全**的， HashTable 线程安全， 因为它在get，put方法上加了`synchronized`关键字。
-    - HashMap 和HashTable的hash值是不一样的， 所在的桶的计算方式也不一样。
-    HashMap的桶是通过`&`运算符来实现的 `(tab.length - 1) & hash`， 而HashTable是通过取余计算， 速度更慢 `hash & 0x7FFFFFFF) % tab.length`
-     （当tab.length = 2^n 时， 两者是等价的， HashMap的数组长度正好都是2^n， 所以这里是等价的）
+    - HashMap 和HashTable的hash值是不一样的， 所在的数组位置的计算方式也不一样。
+    HashMap的数组位置是通过`&`运算符来实现的 `(tab.length - 1) & hash`， 而HashTable是通过取余计算， 速度更慢 `hash & 0x7FFFFFFF) % tab.length`
+     （当tab.length = 2<sup>n</sup> 时， 两者是等价的， HashMap的数组长度正好都是2<sup>n</sup>， 所以这里是等价的）
     - HashTable 的`synchronized`是方法级别的， 也就是它是在put()方法上加的，这也就是说任何一个put操作都会使用同一个锁，而实际上不同索引上
-    的元素之间彼此操作不会受到影响；*ConcurrentHashMap* 相当于是HashTable的升级，它也是线程安全的， 而且只有在同一个桶上加锁，也就是说只有
+    的元素之间彼此操作不会受到影响；*ConcurrentHashMap* 相当于是HashTable的升级，它也是线程安全的， 而且只有在同一个数组位置上加锁，也就是说只有
     在多个线程操作同一个数组索引的时候才加锁，极大提高了效率。
      
 <br>     

@@ -14,7 +14,7 @@ Java 类方法命名规范
 
 [https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html](https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html)
 
-![java](../images/screeshot/naming/java.png)
+![java](../images/java/naming/java.png)
 
 <!-- more -->
 
@@ -22,7 +22,7 @@ Java 类方法命名规范
 
 记录Java类和方法的命名规范，达到见名思意的目的。
 
-![java-naming](../images/screeshot/naming/java-naming.jpg)
+![java-naming](../images/java/naming/java-naming.jpg)
 
 ## 类名规范
 

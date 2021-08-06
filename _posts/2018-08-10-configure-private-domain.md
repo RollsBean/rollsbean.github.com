@@ -36,17 +36,17 @@ GoDaddy[https://sg.godaddy.com/zh](https://sg.godaddy.com/zh/)(有中文界面�
 ### 购买域名
 
 登录Namesilo官网[https://www.namesilo.com/](https://www.namesilo.com/)
-![home page](/images/screeshot/namesilo/namesilo%20homepage.jpg)
+![home page](../images/namesilo/namesilo%20homepage.jpg)
 
 #### 搜索你想要的domain
 
-![namesilo search ](/images/screeshot/namesilo/namesilo%20search.jpg)
+![namesilo search ](../images/namesilo/namesilo%20search.jpg)
 
 #### 选择你想要的domain
 
 `.com` 已被我注册， 所以显示**Registered**
 
-![namesilo search ](/images/screeshot/namesilo/namesilo%20search%20result.jpg)
+![namesilo search ](../images/namesilo/namesilo%20search%20result.jpg)
 
 #### 填写domain详细信息
 
@@ -56,23 +56,23 @@ GoDaddy[https://sg.godaddy.com/zh](https://sg.godaddy.com/zh/)(有中文界面�
 第四项`Privacy Setting`: 隐私设置， 这个地方记着选择`WHOIS Privacy`
 确认一下数量/选择的年限， 就可以提交订单了。
 
-![namesilo search ](/images/screeshot/namesilo/domain%20config.jpg)
+![namesilo search ](../images/namesilo/domain%20config.jpg)
 
 #### 创建账户， 完善个人信息
 
 都是基本信息， 地址和电话号码是必填项， 填好之后点下面的按钮即可。 注意： 邮箱需要验证
-![namesilo search ](/images/screeshot/namesilo/create%20account.jpg)
+![namesilo search ](../images/namesilo/create%20account.jpg)
 
 
 #### 支付订单， 查看domain信息
 
 支付订单时可以直接用支付宝支付， 支付完成后， 进入到**My Account**页面， 选择`domain manager`
 
-![namesilo search ](/images/screeshot/namesilo/account%20page.jpg)
+![namesilo search ](../images/namesilo/account%20page.jpg)
 
 点击管理DNS按钮（`Options` 里的小蓝圆圈）
 
-![namesilo search ](/images/screeshot/namesilo/account%20pre-manager.jpg)
+![namesilo search ](../images/namesilo/account%20pre-manager.jpg)
 
 ### 配置Domain(独立域名)
 
@@ -80,25 +80,25 @@ GoDaddy[https://sg.godaddy.com/zh](https://sg.godaddy.com/zh/)(有中文界面�
 
 如下的列表是资源的记录， 这里注意**CNAME**, 它可以将域名link到第三方的服务上， 也就是说可以将这个域名link到Github pages上， 这里主要就是配置它
 
-![namesilo search ](/images/screeshot/namesilo/manage%20page.jpg)
+![namesilo search ](../images/namesilo/manage%20page.jpg)
 
 如果你们显示的不是这个页面， 可以往下滚动页面， 下面有一个**DNS Templates**， 选择Github 点`Apply Template`, 这样你就可以修改你的Records了。
 
-![namesilo search ](/images/screeshot/namesilo/github%20template.jpg)
+![namesilo search ](../images/namesilo/github%20template.jpg)
 
 继续之前的， 点击修改`CNAME` , 这里只需要将你的 Target hostname 修改为你的Github blog的url即可， 注意： 这个地方不要加协议信息， 只写domain
 
-![namesilo search ](/images/screeshot/namesilo/cname%20update.jpg)
+![namesilo search ](../images/namesilo/cname%20update.jpg)
 
 #### 配置Github CNAME
 
 现在回到Github仓库， 在项目根目录下创建名为`CNAME`的文件， 写上你的域名， 带 "www" 或者不带都可以， 我的是[rollsbean.com](rollsbean.com)
 
-<img src='/images/screeshot/namesilo/github CNAME.jpg' />
+<img alt="CNAME" src="../images/namesilo/github CNAME.jpg" />
 
 然后在`Settings`里查看site状态, 绿色代表配置成功， 不过此时域名可能还没有同步到所有的DNS服务器上，这时访问独立域名是404。
 
-![namesilo search ](/images/screeshot/namesilo/GitHub%20page%20site.jpg)
+![namesilo search ](../images/namesilo/GitHub%20page%20site.jpg)
 
 #### 相关Support
 
@@ -106,7 +106,7 @@ GoDaddy[https://sg.godaddy.com/zh](https://sg.godaddy.com/zh/)(有中文界面�
 那我们怎么查询自己的域名有没有完全生效呢？ 你可以访问 whatsmydns[whatsmydns.net/#CNAME](https://www.whatsmydns.net/#CNAME) 
 来查询你的域名状态。 这里要选择CNAME类型查询
 
-<img src='/images/screeshot/namesilo/dns progagation check.jpg' width='100%' height='400px'/>
+<img alt="dns" src='../images/namesilo/dns progagation check.jpg' width='100%' height='400px'/>
 
 如果都是对勾，则代表CNAME同步好了，不然，慢慢等待吧！
 

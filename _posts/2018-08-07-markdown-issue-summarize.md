@@ -86,7 +86,7 @@ Markdown ([Markdown语法介绍](http://xianbai.me/learn-md/article/about/readme
 ```
  
 首页的显示是这样的：
-![](/images/screeshot/home_page.jpg)
+![](/images/home_page.jpg)
 
 - 博客日期排序问题
 
