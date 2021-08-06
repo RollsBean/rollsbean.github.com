@@ -8,7 +8,7 @@ author: Kevin Fan
 ---
 
 * content
-  {:toc}
+{:toc}
 
 GIT 修改已提交的邮箱和作者
 <!-- more -->

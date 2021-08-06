@@ -8,7 +8,7 @@ author: Kevin Fan
 ---
 
 * content
-  {:toc}
+{:toc}
 
 
 <!-- more -->
